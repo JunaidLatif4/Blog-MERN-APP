@@ -1,0 +1,35 @@
+.header_container{
+    margin: 0 auto;
+    background-color: #353a40;
+
+    border: 2px solid red;
+    
+    .header_box{
+        margin: 1rem auto;
+        width: 90%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+
+        .logo{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+            
+            img{
+                width:80px;
+            }
+        }
+
+        .nav{
+
+            a{
+                text-decoration: none;
+            }
+        }
+    }
+}
