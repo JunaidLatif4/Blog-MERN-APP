@@ -1,0 +1,16 @@
+.home_container{
+
+    .post_section{
+        margin: 2rem 1rem;
+        display: grid;
+        grid-template-columns: 2.5fr 1fr;
+        gap: 2rem;
+        
+        // border: 2px solid red;
+
+        .post_body{
+
+            // border: 2px solid black;
+        }
+    }
+}
