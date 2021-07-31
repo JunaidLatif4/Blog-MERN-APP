@@ -25,7 +25,7 @@ const Header = () => {
 
                     <NavLink to="/" className="logo">
                         <img src={Logo} alt="ERROR_LOGO" />
-                        <span> Beddit </span>
+                        <span> Leddit </span>
                     </NavLink>
 
                     <nav className="nav">
