@@ -24,6 +24,7 @@
         }
 
         .data{
+            width: 90%;
             display: flex;
             flex-direction: column;
             gap: .5rem;
@@ -43,6 +44,33 @@
 
             .comment_info{
                 color: #007aff;
+            }
+        }
+    }
+
+
+    .comments{
+        margin-left: 10%;
+        width: 70%;
+
+        .author{
+            color: #27a945;
+        }
+
+        .comment{
+
+            margin: 1rem 0;
+            font-size: small;
+        }
+
+        .leave_comment{
+
+            h4{
+                text-align: center;
+                margin: 1rem 0 .5rem 0;
+            }
+            .submit_comment{
+                display: flex;
             }
         }
     }
