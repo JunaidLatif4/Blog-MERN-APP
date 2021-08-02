@@ -40,11 +40,15 @@ router.post('/login', async (req, res) => {
     let token;
 
     let { password, ...others } = user._doc;
-
     !user ? (res.json({ err: true, msg: "Wrong Email!" })) :
         !validate ? (res.json({ err: true, msg: "Wrong Password!" })) :
             token = await user.generateAuthToken();
-            res.json({ err: false, msg: others })
+    console.log(token)
+    res.cookie("AuthToken", token, {
+        expires: new Date(Date.now() + 25892000000),
+        httpOnly: true
+    })
+    res.json({ err: false, msg: others })
 
 
 

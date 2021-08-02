@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import axios from 'axios'
 
 import { Button, withStyles, TextField } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog';
@@ -113,39 +114,110 @@ const Header = () => {
     };
 
     const Login = () => {
+        const [loginData, setLoginData] = useState({
+            email: "",
+            pass: "",
+        })
+
         const set = () => {
             setComponent("register")
         }
+
+        const enteringLoginData = (event) => {
+
+            const { name, value } = event.target
+
+            setLoginData((preValue) => {
+                return {
+                    ...preValue,
+                    [name]: value
+                }
+            })
+        }
+
+        const login = async () => {
+            let url = "http://localhost:5000/api/login";
+            await axios.post(url, {
+                email: loginData.email,
+                password: loginData.pass
+            }, { withCredentials: true })
+                .then((res) => {
+                    console.log(res)
+                    alert("Loged IN")
+                })
+                .catch((err) => {
+                    console.log("Error While Login = ", err)
+                    alert("Login Error")
+                })
+        }
+
         return (
             <>
                 <DialogTitle id="customized-dialog-title" >
                     Sign in
                 </DialogTitle>
                 <DialogContent dividers >
-                    <MytextField variant="outlined" label="Email" />
-                    <MytextField variant="outlined" label="Password" />
+                    <MytextField onChange={enteringLoginData} name="email" value={loginData.email} variant="outlined" label="Email" />
+                    <MytextField onChange={enteringLoginData} name="pass" value={loginData.pass} variant="outlined" label="Password" />
                     <p className="create"> Don't have an account <span onClick={set}> create an account </span> </p>
-                    <MyBtn2> log in </MyBtn2>
+                    <MyBtn2 onClick={login}> log in </MyBtn2>
+                    {loginData.email} {loginData.pass}
                 </DialogContent>
             </>
         )
     }
     const Register = () => {
+        const [registerData, setRegisterData] = useState({
+            fname: "",
+            lname: "",
+            email: "",
+            pass: "",
+        })
         const set = () => {
             setComponent("login")
         }
+
+        const enteringRegisterData = (event) => {
+            const { name, value } = event.target;
+
+            setRegisterData((preValue) => {
+                return {
+                    ...preValue,
+                    [name]: value
+                }
+            })
+        }
+
+        const register = async () => {
+            let url = "http://localhost:5000/api/register";
+            await axios.post(url, {
+                first_name: registerData.fname,
+                last_name: registerData.lname,
+                email: registerData.email,
+                password: registerData.pass
+            }, { withCredentials: true })
+                .then((res) => {
+                    console.log(res)
+                    alert("REGISTERED")
+                })
+                .catch((err) => {
+                    console.log("Error While REGISTRATION = ", err)
+                    alert("REGISTRATION ERROR")
+                })
+        }
+
         return (
             <>
                 <DialogTitle id="customized-dialog-title" >
                     Sign up
                 </DialogTitle>
                 <DialogContent dividers >
-                    <MytextField variant="outlined" label="First Name" />
-                    <MytextField variant="outlined" label="Last Name" />
-                    <MytextField variant="outlined" label="Email" />
-                    <MytextField variant="outlined" label="Password" />
+                    <MytextField onChange={enteringRegisterData} name="fname" value={registerData.fname} variant="outlined" label="First Name" />
+                    <MytextField onChange={enteringRegisterData} name="lname" value={registerData.lanme} variant="outlined" label="Last Name" />
+                    <MytextField onChange={enteringRegisterData} name="email" value={registerData.email} variant="outlined" label="Email" />
+                    <MytextField onChange={enteringRegisterData} name="pass" value={registerData.pass} variant="outlined" label="Password" />
                     <p className="create"> Already have an account <span onClick={set}> Login </span> </p>
-                    <MyBtn2> log in </MyBtn2>
+                    <MyBtn2 onClick={register}> sign in </MyBtn2>
                 </DialogContent>
             </>
         )

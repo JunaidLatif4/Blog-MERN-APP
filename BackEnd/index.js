@@ -1,11 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require('cors');
 
 const authRoute = require("./routes/auth")
+const postRoute = require("./routes/post")
 
 const app = express();
 app.use(express.json());
+app.use(cors({
+    origin: true,
+    credentials: true,
+}));
 dotenv.config();
 
 mongoose.connect("mongodb://localhost/leddit", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
@@ -13,11 +19,13 @@ mongoose.connect("mongodb://localhost/leddit", { useNewUrlParser: true, useUnifi
     .catch((err) => console.log("Error While Connectiong to MongoDB ", err));
 
 
-app.use("/show" , (req , res)=>{
+app.use("/show", (req, res) => {
     console.log("Requested")
 })
 app.use("/api", authRoute)
+app.use('/post', postRoute)
 
 app.listen("5000", () => {
+    console.clear();
     console.log("BackEnd is running at 5000 Port")
 });

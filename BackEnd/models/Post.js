@@ -2,17 +2,33 @@ const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema({
     title: {
-        typeof: String,
+        type: String,
+
     },
     dec: {
-        typeof: String,
+        type: String,
+        default: ""
     },
-    first_name: {
-        typeof: String,
+    author: {
+        type: String,
+        default: ""
     },
-    categories: {
-        typeof: String,
+    category: {
+        type: String,
+        default: ""
     },
+    // comments :[
+    //     {
+    //         comment:{
+    //            type:String,
+    //            require:true
+    //         },
+    //         author:{
+    //             type:String,
+    //             require:true
+    //         }
+    //     }
+    // ]
 },
     { timestamps: true }
 )
