@@ -1,10 +1,12 @@
 const express = require("express");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 
 const authRoute = require("./routes/auth")
 
 const app = express();
 app.use(express.json());
+dotenv.config();
 
 mongoose.connect("mongodb://localhost/leddit", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(console.log("Connected to MongoDB"))

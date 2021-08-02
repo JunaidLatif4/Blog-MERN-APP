@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
@@ -36,11 +37,13 @@ router.post('/login', async (req, res) => {
 
     let user = await User.findOne({ email: req.body.email })
     let validate = await bcrypt.compare(req.body.password, user.password)
+    let token;
 
     let { password, ...others } = user._doc;
 
     !user ? (res.json({ err: true, msg: "Wrong Email!" })) :
         !validate ? (res.json({ err: true, msg: "Wrong Password!" })) :
+            token = await user.generateAuthToken();
             res.json({ err: false, msg: others })
 
 
