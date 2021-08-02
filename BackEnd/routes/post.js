@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 
 const Post = require("../models/Post");
 
+
+
+
+// CREATE
 router.post('/createpost', async (req, res) => {
 
     let newPost = new Post({
@@ -19,5 +23,13 @@ router.post('/createpost', async (req, res) => {
         })
 
 });
+
+
+
+// DELETE
+router.delete('deletepost' , async (req , res)=>{
+
+    
+})
 
 module.exports = router;

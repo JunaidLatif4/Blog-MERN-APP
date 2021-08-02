@@ -249,11 +249,9 @@ const Header = () => {
                 </div>
             </div>
 
-            <div className="">
-                <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-                    {log(component)}
-                </Dialog>
-            </div>
+            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+                {log(component)}
+            </Dialog>
         </>
     )
 }
