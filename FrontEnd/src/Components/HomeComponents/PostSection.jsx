@@ -8,6 +8,10 @@ import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import SendIcon from '@material-ui/icons/Send';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import Dialog from '@material-ui/core/Dialog';
+
+import Post from './Post';
 
 import { useSelector } from 'react-redux';
 
@@ -107,6 +111,14 @@ const PostSection = (props) => {
     const [commentData, setCommentData] = useState("")
     const [reload, setreload] = useState(false)
 
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     var user = useSelector((state) => state.userData)
 
     const history = useHistory();
@@ -172,6 +184,7 @@ const PostSection = (props) => {
         })
     }
 
+
     return (
         <>
             {
@@ -185,6 +198,9 @@ const PostSection = (props) => {
                                 <div className="postsection_container" key={props._id}>
                                     <Accordion square expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
                                         <div className="postsection_box">
+                                            <div className="edit">
+                                                <MyDelIconBtn onClick={handleClickOpen}> <EditIcon /> </MyDelIconBtn>
+                                            </div>
                                             <div className="delete">
                                                 <MyDelIconBtn onClick={() => deletePost(props._id)}> <DeleteIcon /> </MyDelIconBtn>
                                             </div>
@@ -236,6 +252,9 @@ const PostSection = (props) => {
                                         </AccordionDetails>
                                     </Accordion>
                                 </div>
+                                <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+                                    <Post data={props} />
+                                </Dialog>
                             </>
                         )
                     })

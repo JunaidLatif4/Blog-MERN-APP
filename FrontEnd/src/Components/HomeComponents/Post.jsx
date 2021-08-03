@@ -94,12 +94,12 @@ const MyBtn2 = withStyles({
 
 const Post = ({ data }) => {
 
-    const [PostData, setPostData] = useState("")
+    const [PostData, setPostData] = useState(data == null ? "" : data.title)
     const [file, setFile] = useState("")
 
     var user = useSelector((state) => state.userData)
 
-    const history = useHistory()
+    const history = useHistory();
 
     const enteringPostData = (event) => {
         setPostData(event.target.value)
@@ -129,23 +129,45 @@ const Post = ({ data }) => {
             })
     }
 
-    console.log(data)
+    const editPost = async (data) => {
+        let url = "http://localhost:5000/post/editpost/" + data
+
+        await axios.patch(url, { title: PostData })
+            .then((res) => {
+                console.log("POST EDIT SUCCESS === ", res)
+                history.go(0)
+            }).catch((err) => {
+                console.log("ERROR WHILE EDITPOST ===== ", err)
+            })
+
+    }
+
+    // console.log(data)
 
     return (
         <>
-            <DialogTitle id="customized-dialog-title" >
-                {
-                    data != null ? <> Data </> :
-                        <>
+            {
+                data != null ?
+                    <>
+                        <DialogTitle id="customized-dialog-title" >
+                            Edit Post
+                        </DialogTitle>
+                        <DialogContent dividers style={{ padding: "2rem 1rem" }}>
+                            <MytextField onChange={enteringPostData} value={PostData} variant="outlined" label="Title" />
+                            <MyBtn2 onClick={() => editPost(data._id)}> Edit Post </MyBtn2>
+                        </DialogContent>
+                    </> :
+                    <>
+                        <DialogTitle id="customized-dialog-title" >
                             Create Post
-                        </>
-                }
-            </DialogTitle>
-            <DialogContent dividers style={{ padding: "2rem 1rem" }}>
-                <input onChange={uploadImg} type="file" accept="image/png , image/jpeg" placeholder="Upload Img" />
-                <MytextField onChange={enteringPostData} variant="outlined" label="Title" />
-                <MyBtn2 onClick={sendPost}> Post </MyBtn2>
-            </DialogContent>
+                        </DialogTitle>
+                        <DialogContent dividers style={{ padding: "2rem 1rem" }}>
+                            <input onChange={uploadImg} type="file" accept="image/png , image/jpeg" placeholder="Upload Img" />
+                            <MytextField onChange={enteringPostData} variant="outlined" label="Title" />
+                            <MyBtn2 onClick={sendPost}> Post </MyBtn2>
+                        </DialogContent>
+                    </>
+            }
         </>
     )
 }

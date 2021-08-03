@@ -11,7 +11,6 @@ const postRoute = require("./routes/post")
 const app = express();
 app.use(express.json());
 app.use(express.static('public'))
-// app.use('/public/imgs', express.static('public'))
 app.use(cookieParser());
 app.use(cors({
     origin: true,
@@ -30,7 +29,6 @@ app.use("/show", (req, res) => {
 app.use("/api", authRoute)
 app.use('/post', postRoute)
 
-// app.post('/token' , Auth )
 
 app.listen(5000, () => {
     console.clear();

@@ -14,8 +14,6 @@ const authenticate = async (req , res , next) =>{
         req.token = FrontEndToken;
         req.rootUser = rootUser;
 
-        console.log("The Verified Token Data = " , rootUser)
-
         next()
 
     } catch(err){

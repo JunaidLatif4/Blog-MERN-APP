@@ -5,8 +5,6 @@ const fs = require('fs');
 const { promisify } = require("util")
 const pipeline = promisify(require("stream").pipeline)
 
-const authenticate = require("../middleware/authenticate")
-
 const Post = require("../models/Post");
 
 
@@ -17,7 +15,6 @@ router.get('/allposts', async (req, res) => {
 
     await Post.find()
         .then((data) => {
-            // console.log("All posts ==== " , data)
             res.json(data)
         }).catch((err) => {
             console.log("Error While getting All posts ====== ", err)
@@ -54,6 +51,19 @@ router.post('/createpost', upload.single("file"), async (req, res) => {
 
 
 
+// EDIT POST
+router.patch('/editpost/:id' , async (req , res)=>{
+    let id = req.params.id;
+    let title = req.body.title
+    Post.findOneAndUpdate({_id: id} , { title: title } , {new : true})
+    .then((data)=>{
+        console.log("The Update Data === " , data)
+        res.json(data)
+    }).catch((err)=>{
+        console.log("ERROR WHILE UPDATE == " , err)
+    })
+})
+
 // DELETE
 router.delete('/deletepost/:id', async (req, res) => {
 
@@ -75,9 +85,6 @@ router.post('/addcomment', async (req, res) => {
 
     let id = req.body.id
     let comment = req.body.newComment
-
-    console.log("ID ======= ", id)
-    console.log("Comment ======= ", comment)
 
     Post.updateOne({ _id: id }, { $push: { comments: comment } })
         .then((data) => {
