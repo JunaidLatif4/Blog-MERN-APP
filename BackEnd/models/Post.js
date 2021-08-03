@@ -22,7 +22,7 @@ const PostSchema = new mongoose.Schema({
     },
     comments :[
         {
-            comment:{
+            msg:{
                type:String,
                require:true
             },

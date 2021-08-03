@@ -3,10 +3,8 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom'
 
 import { Button, TextField, withStyles } from "@material-ui/core"
-import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
@@ -125,7 +123,7 @@ const Post = ({ data }) => {
             , { withCredentials: true })
             .then((res) => {
                 console.log("The Post DATA SEND ==== ", res)
-                // history.go(0)
+                history.go(0)
             }).catch((err) => {
                 console.log("ERROR IN SENDING POST DATA === ", err)
             })

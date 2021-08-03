@@ -60,4 +60,25 @@ router.delete('deletepost', async (req, res) => {
 
 })
 
+
+
+// AddComment
+router.post('/addcomment' , async (req , res)=>{
+
+    let id = req.body.id
+    let comment = req.body.newComment
+
+    console.log("ID ======= " , id)
+    console.log("Comment ======= " , comment)
+
+    Post.updateOne({_id: id} , {$push : {comments : comment } })
+    .then((data) => {
+        console.log("Comment ADDED SUCCESS = " , data)
+        res.json({err:false , data})
+    }).catch((err)=>{
+        console.log("ERROR WHILE ADDING COMMENT " , err)
+    })
+
+})
+
 module.exports = router;
