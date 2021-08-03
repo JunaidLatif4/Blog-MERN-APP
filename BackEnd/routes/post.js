@@ -1,19 +1,21 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 
+const authenticate = require("../middleware/authenticate")
+
 const Post = require("../models/Post");
 
 
 
 
 // CREATE
-router.post('/createpost', async (req, res) => {
+router.post('/createpost', authenticate, async (req, res) => {
 
     let newPost = new Post({
         title: req.body.title,
-        dec: req.body.dec,
+        // dec: req.body.dec,
         author: req.body.author,
-        category: req.body.cat,
+        // category: req.body.cat,
     });
     await newPost.save()
         .then((data) => {
@@ -27,9 +29,9 @@ router.post('/createpost', async (req, res) => {
 
 
 // DELETE
-router.delete('deletepost' , async (req , res)=>{
+router.delete('deletepost', async (req, res) => {
 
-    
+
 })
 
 module.exports = router;

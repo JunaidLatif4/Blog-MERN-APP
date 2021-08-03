@@ -7,7 +7,7 @@ const PostSchema = new mongoose.Schema({
     },
     dec: {
         type: String,
-        default: ""
+        default: "Default"
     },
     author: {
         type: String,
@@ -15,7 +15,7 @@ const PostSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        default: ""
+        default: "default"
     },
     // comments :[
     //     {

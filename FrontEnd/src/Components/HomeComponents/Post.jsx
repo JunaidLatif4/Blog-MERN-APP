@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom'
 
 import { Button, TextField, withStyles } from "@material-ui/core"
 import Dialog from '@material-ui/core/Dialog';
@@ -89,6 +91,28 @@ const MyBtn2 = withStyles({
 
 const Post = ({ data }) => {
 
+    const [PostData, setPostData] = useState("")
+
+    const history = useHistory()
+
+    const enteringPostData = (event) => [
+        setPostData(event.target.value)
+    ]
+
+    const sendPost = async () => {
+        let url = "http://localhost:5000/post/createpost"
+        await axios.post(url, {
+            title: PostData,
+            author: "Junaid"
+        }, { withCredentials: true })
+            .then((res) => {
+                console.log("The Post DATA SEND ==== ", res)
+                history.go(0)
+            }).catch((err) => {
+                console.log("ERROR IN SENDING POST DATA === ", err)
+            })
+    }
+
     console.log(data)
 
     return (
@@ -102,8 +126,8 @@ const Post = ({ data }) => {
                 }
             </DialogTitle>
             <DialogContent dividers >
-                <MytextField variant="outlined" label="Title" />
-                <MyBtn2 > Post </MyBtn2>
+                <MytextField onChange={enteringPostData} variant="outlined" label="Title" />
+                <MyBtn2 onClick={sendPost}> Post </MyBtn2>
             </DialogContent>
         </>
     )

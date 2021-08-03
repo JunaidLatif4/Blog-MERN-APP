@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React, { useState } from 'react'
 
 import Post from './Post'
 
@@ -12,6 +12,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
 import './CSS/SideBarSection.scss'
+import { NavLink } from 'react-router-dom';
 
 
 const MytextField = withStyles({
@@ -66,7 +67,7 @@ const SideBarSection = () => {
                 </div>
                 <div className="create_post">
                     <MyBtn style={{ backgroundColor: "#27a945", borderRadius: "5px 0 0 5px" }}> New link </MyBtn>
-                    <MyBtn onClick={handleClickOpen}> New post </MyBtn>
+                    <NavLink to="/post" style={{ textDecoration: "none", width: "100%" }}> <MyBtn onClick={handleClickOpen}> New post </MyBtn> </NavLink>
                 </div>
                 <div className="create_category">
                     <MyBtn style={{ borderRadius: "5px" }}> Create category </MyBtn>
@@ -87,7 +88,7 @@ const SideBarSection = () => {
             </div>
 
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-                    <Post/>
+                <Post />
             </Dialog>
         </>
     )

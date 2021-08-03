@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink , useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 import { Button, withStyles, TextField } from '@material-ui/core'
@@ -106,6 +106,8 @@ const Header = () => {
     const [open, setOpen] = React.useState(false);
     const [component, setComponent] = useState("login")
 
+    const history = useHistory();
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -144,6 +146,8 @@ const Header = () => {
                 .then((res) => {
                     console.log(res)
                     alert("Loged IN")
+                    history.go(0)
+
                 })
                 .catch((err) => {
                     console.log("Error While Login = ", err)
@@ -257,4 +261,4 @@ const Header = () => {
 }
 
 
-export default Header
+export default Header;
