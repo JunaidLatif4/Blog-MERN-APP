@@ -142,7 +142,7 @@ const Post = ({ data }) => {
 
     }
 
-    // console.log(data)
+    console.log(data)
 
     return (
         <>

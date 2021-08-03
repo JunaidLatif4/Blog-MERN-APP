@@ -189,10 +189,11 @@ const PostSection = (props) => {
         <>
             {
                 posts == null || posts.length < 1 ?
-                    <>
+                <>
                         <h1 style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50vh" }}> No Post </h1>
                     </> :
                     posts.slice(0).reverse().map((props, index) => {
+                        console.log("The props that is send === " , props)
                         return (
                             <>
                                 <div className="postsection_container" key={props._id}>

@@ -208,10 +208,9 @@ const Header = () => {
                 </DialogTitle>
                 <DialogContent dividers >
                     <MytextField onChange={enteringLoginData} name="email" value={loginData.email} variant="outlined" label="Email" />
-                    <MytextField onChange={enteringLoginData} name="pass" value={loginData.pass} variant="outlined" label="Password" />
+                    <MytextField onChange={enteringLoginData} name="pass" value={loginData.pass} type="password" variant="outlined" label="Password" />
                     <p className="create"> Don't have an account <span onClick={set}> create an account </span> </p>
                     <MyBtn2 onClick={login}> log in </MyBtn2>
-                    {loginData.email} {loginData.pass}
                 </DialogContent>
             </>
         )
@@ -265,7 +264,7 @@ const Header = () => {
                     <MytextField onChange={enteringRegisterData} name="fname" value={registerData.fname} variant="outlined" label="First Name" />
                     <MytextField onChange={enteringRegisterData} name="lname" value={registerData.lanme} variant="outlined" label="Last Name" />
                     <MytextField onChange={enteringRegisterData} name="email" value={registerData.email} variant="outlined" label="Email" />
-                    <MytextField onChange={enteringRegisterData} name="pass" value={registerData.pass} variant="outlined" label="Password" />
+                    <MytextField onChange={enteringRegisterData} name="pass" value={registerData.pass} type="password" variant="outlined" label="Password" />
                     <p className="create"> Already have an account <span onClick={set}> Login </span> </p>
                     <MyBtn2 onClick={register}> sign in </MyBtn2>
                 </DialogContent>
