@@ -1,15 +1,23 @@
 import React, { useState } from 'react'
-import { NavLink , useHistory } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import axios from 'axios'
 
-import { Button, withStyles, TextField } from '@material-ui/core'
+import { Button, withStyles, TextField, makeStyles } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
+// import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+
+import { useSelector, useDispatch } from 'react-redux'
 
 import Logo from '../IMG/logo.png'
 
@@ -99,12 +107,25 @@ const MyBtn2 = withStyles({
     }
 })(Button)
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    paper: {
+        marginRight: theme.spacing(2),
+    },
+}));
 
 
 const Header = () => {
 
+    const classes = useStyles();
+    const [menuOpen, setMenuOpen] = React.useState(false);
+    const anchorRef = React.useRef(null);
     const [open, setOpen] = React.useState(false);
     const [component, setComponent] = useState("login")
+
+    var user = useSelector((state) => state.userData)
 
     const history = useHistory();
 
@@ -114,6 +135,31 @@ const Header = () => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const ToggleMenu = () => {
+        setMenuOpen((prevOpen) => !prevOpen);
+    };
+    const CloseMenu = (event) => {
+        if (anchorRef.current && anchorRef.current.contains(event.target)) {
+            return;
+        }
+
+        setMenuOpen(false);
+    };
+    function handleListKeyDown(event) {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            setMenuOpen(false);
+        }
+    }
+    const prevOpen = React.useRef(menuOpen);
+    React.useEffect(() => {
+        if (prevOpen.current === true && menuOpen === false) {
+            anchorRef.current.focus();
+        }
+
+        prevOpen.current = menuOpen;
+    }, [menuOpen]);
 
     const Login = () => {
         const [loginData, setLoginData] = useState({
@@ -248,7 +294,45 @@ const Header = () => {
                     </NavLink>
 
                     <nav className="nav">
-                        <NavLink to="/register"> <MyBtn onClick={handleClickOpen} variant="contained"> Sign in </MyBtn> </NavLink>
+                        {
+                            user == null ?
+                                <>
+                                    <NavLink to="/register"> <MyBtn onClick={handleClickOpen} variant="contained"> Sign in </MyBtn> </NavLink>
+                                </> :
+                                <>
+                                    <div className={classes.root}>
+                                        <div>
+                                            <Button
+                                                ref={anchorRef}
+                                                aria-controls={menuOpen ? 'menu-list-grow' : undefined}
+                                                aria-haspopup="true"
+                                                onClick={ToggleMenu}
+                                                style={{color:"white" , backgroundColor:"#27a945" , padding:".5rem 1rem"}}
+                                            >
+                                                {user.first_name}
+                                            </Button>
+                                            <Popper open={menuOpen} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                                                {({ TransitionProps, placement }) => (
+                                                    <Grow
+                                                        {...TransitionProps}
+                                                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                                                    >
+                                                        <Paper>
+                                                            <ClickAwayListener onClickAway={CloseMenu}>
+                                                                <MenuList autoFocusItem={menuOpen} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                                                    <MenuItem onClick={CloseMenu}>Profile</MenuItem>
+                                                                    <MenuItem onClick={CloseMenu}>My account</MenuItem>
+                                                                    <MenuItem onClick={CloseMenu}>Logout</MenuItem>
+                                                                </MenuList>
+                                                            </ClickAwayListener>
+                                                        </Paper>
+                                                    </Grow>
+                                                )}
+                                            </Popper>
+                                        </div>
+                                    </div>
+                                </>
+                        }
                     </nav>
                 </div>
             </div>

@@ -2,7 +2,7 @@ const router = require("express").Router();
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
-
+const Auth = require("../middleware/authenticate")
 
 const User = require("../models/User");
 
@@ -58,6 +58,11 @@ router.post('/login', async (req, res) => {
 
     // !validate && res.json({err:true , msg:"Wrong Password!"})
     // res.json({err:false , msg:user})
+})
+
+// Geting UserData
+router.post('/getuser', Auth, async (req, res) => {
+    res.json({ User: req.rootUser })
 })
 
 

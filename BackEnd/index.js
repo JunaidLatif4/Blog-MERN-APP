@@ -10,6 +10,8 @@ const postRoute = require("./routes/post")
 
 const app = express();
 app.use(express.json());
+app.use(express.static('public'))
+// app.use('/public/imgs', express.static('public'))
 app.use(cookieParser());
 app.use(cors({
     origin: true,

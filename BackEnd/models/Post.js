@@ -5,6 +5,9 @@ const PostSchema = new mongoose.Schema({
         type: String,
 
     },
+    img:{
+        type:String
+    },
     dec: {
         type: String,
         default: "Default"
@@ -17,18 +20,18 @@ const PostSchema = new mongoose.Schema({
         type: String,
         default: "default"
     },
-    // comments :[
-    //     {
-    //         comment:{
-    //            type:String,
-    //            require:true
-    //         },
-    //         author:{
-    //             type:String,
-    //             require:true
-    //         }
-    //     }
-    // ]
+    comments :[
+        {
+            comment:{
+               type:String,
+               require:true
+            },
+            author:{
+                type:String,
+                require:true
+            }
+        }
+    ]
 },
     { timestamps: true }
 )

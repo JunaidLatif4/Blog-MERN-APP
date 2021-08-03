@@ -11,6 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
+import { useSelector } from 'react-redux';
+
 
 
 const styles = (theme) => ({
@@ -55,6 +57,9 @@ const DialogContent = withStyles((theme) => ({
                 cursor: "pointer",
                 textDecoration: "underline"
             }
+        },
+        "& .file": {
+
         }
     },
 }))(MuiDialogContent);
@@ -92,22 +97,35 @@ const MyBtn2 = withStyles({
 const Post = ({ data }) => {
 
     const [PostData, setPostData] = useState("")
+    const [file, setFile] = useState("")
+
+    var user = useSelector((state) => state.userData)
 
     const history = useHistory()
 
-    const enteringPostData = (event) => [
+    const enteringPostData = (event) => {
         setPostData(event.target.value)
-    ]
+    }
+
+    const uploadImg = (event) => {
+        setFile(event.target.files[0])
+    }
 
     const sendPost = async () => {
         let url = "http://localhost:5000/post/createpost"
-        await axios.post(url, {
-            title: PostData,
-            author: "Junaid"
-        }, { withCredentials: true })
+        // let url = "http://httpbin.org/anything"
+
+        let data = new FormData();
+        data.append("title", PostData)
+        data.append("author", user.first_name)
+        data.append("file", file)
+
+        await axios.post(url
+            , data
+            , { withCredentials: true })
             .then((res) => {
                 console.log("The Post DATA SEND ==== ", res)
-                history.go(0)
+                // history.go(0)
             }).catch((err) => {
                 console.log("ERROR IN SENDING POST DATA === ", err)
             })
@@ -125,7 +143,8 @@ const Post = ({ data }) => {
                         </>
                 }
             </DialogTitle>
-            <DialogContent dividers >
+            <DialogContent dividers style={{ padding: "2rem 1rem" }}>
+                <input onChange={uploadImg} type="file" accept="image/png , image/jpeg" placeholder="Upload Img" />
                 <MytextField onChange={enteringPostData} variant="outlined" label="Title" />
                 <MyBtn2 onClick={sendPost}> Post </MyBtn2>
             </DialogContent>

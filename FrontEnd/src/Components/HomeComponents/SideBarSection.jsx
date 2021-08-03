@@ -4,15 +4,16 @@ import Post from './Post'
 
 import { Button, TextField, withStyles } from "@material-ui/core"
 import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
+// import MuiDialogTitle from '@material-ui/core/DialogTitle';
+// import MuiDialogContent from '@material-ui/core/DialogContent';
+// import MuiDialogActions from '@material-ui/core/DialogActions';
+// import IconButton from '@material-ui/core/IconButton';
+// import CloseIcon from '@material-ui/icons/Close';
+// import Typography from '@material-ui/core/Typography';
+
+import { useSelector, useDispatch } from 'react-redux'
 
 import './CSS/SideBarSection.scss'
-import { NavLink } from 'react-router-dom';
 
 
 const MytextField = withStyles({
@@ -51,6 +52,10 @@ const SideBarSection = () => {
 
     const [open, setOpen] = React.useState(false);
 
+    var user = useSelector((state) => state.userData)
+
+    console.log("User with Use Selector ===== ", user)
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -67,7 +72,15 @@ const SideBarSection = () => {
                 </div>
                 <div className="create_post">
                     <MyBtn style={{ backgroundColor: "#27a945", borderRadius: "5px 0 0 5px" }}> New link </MyBtn>
-                    <NavLink to="/post" style={{ textDecoration: "none", width: "100%" }}> <MyBtn onClick={handleClickOpen}> New post </MyBtn> </NavLink>
+                    {
+                        user == null ?
+                            <>
+                                <MyBtn onClick={() => alert("Login First to Create Post")}> New post </MyBtn>
+                            </> :
+                            <>
+                                <MyBtn onClick={handleClickOpen}> New post </MyBtn>
+                            </>
+                    }
                 </div>
                 <div className="create_category">
                     <MyBtn style={{ borderRadius: "5px" }}> Create category </MyBtn>
