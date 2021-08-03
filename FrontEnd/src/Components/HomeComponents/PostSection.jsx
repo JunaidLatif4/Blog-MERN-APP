@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
-import { withStyles, Divider, Button, TextField } from '@material-ui/core'
+import { withStyles, Divider, Button, TextField, IconButton } from '@material-ui/core'
 import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import SendIcon from '@material-ui/icons/Send';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import { useSelector } from 'react-redux';
 
 import './CSS/PostSection.scss'
 
@@ -76,7 +80,6 @@ const MytextField = withStyles({
         },
     }
 })(TextField)
-
 const MyBtn = withStyles({
     root: {
         width: "100%",
@@ -85,6 +88,15 @@ const MyBtn = withStyles({
         borderRadius: "0 5px 5px 0"
     }
 })(Button)
+const MyDelIconBtn = withStyles({
+    root: {
+        color: "green",
+        cursor: "pointer",
+        "&:hover": {
+            color: "red"
+        }
+    }
+})(IconButton)
 
 
 const PostSection = (props) => {
@@ -94,6 +106,10 @@ const PostSection = (props) => {
     const [posts, setPosts] = useState(null)
     const [commentData, setCommentData] = useState("")
     const [reload, setreload] = useState(false)
+
+    var user = useSelector((state) => state.userData)
+
+    const history = useHistory();
 
     useEffect(async () => {
         let url = "http://localhost:5000/post/allposts"
@@ -119,7 +135,7 @@ const PostSection = (props) => {
     const saveComment = async (data) => {
 
         let newComment = {
-            author: "Junaid",
+            author: user.first_name,
             msg: commentData
         };
 
@@ -139,6 +155,23 @@ const PostSection = (props) => {
         })
     }
 
+    const deletePost = async (data) => {
+        let url = "http://localhost:5000/post/deletepost/" + data
+        await axios.delete(url)
+            .then((res) => {
+                console.log("DELETED ==== ", res)
+
+                // history.go(0)
+            }).catch((err) => {
+                console.log("ERROR WHILE DELETING ==== ", err)
+            })
+        setreload((preValue) => {
+            return (
+                !preValue
+            )
+        })
+    }
+
     return (
         <>
             {
@@ -149,9 +182,12 @@ const PostSection = (props) => {
                     posts.slice(0).reverse().map((props, index) => {
                         return (
                             <>
-                                <div className="postsection_container" key={props.id}>
+                                <div className="postsection_container" key={props._id}>
                                     <Accordion square expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
                                         <div className="postsection_box">
+                                            <div className="delete">
+                                                <MyDelIconBtn onClick={() => deletePost(props._id)}> <DeleteIcon /> </MyDelIconBtn>
+                                            </div>
                                             <div className="avater">
                                                 <img src={props.img} alt="ERROR" />
                                             </div>

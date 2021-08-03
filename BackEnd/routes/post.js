@@ -13,16 +13,16 @@ const Post = require("../models/Post");
 
 
 // AllPosts
-router.get('/allposts' , async (req , res)=>{
+router.get('/allposts', async (req, res) => {
 
     await Post.find()
-    .then((data)=>{
-        // console.log("All posts ==== " , data)
-        res.json(data)
-    }).catch((err)=>{
-        console.log("Error While getting All posts ====== " , err)
-        res.json(err)
-    })
+        .then((data) => {
+            // console.log("All posts ==== " , data)
+            res.json(data)
+        }).catch((err) => {
+            console.log("Error While getting All posts ====== ", err)
+            res.json(err)
+        })
 })
 
 
@@ -55,29 +55,37 @@ router.post('/createpost', upload.single("file"), async (req, res) => {
 
 
 // DELETE
-router.delete('deletepost', async (req, res) => {
+router.delete('/deletepost/:id', async (req, res) => {
 
+    let id = req.params.id
 
+    await Post.findOneAndDelete({ _id: id })
+        .then((data) => {
+            console.log("DELETED === ", data)
+            res.json({ err: false })
+        }).catch((err) => {
+            console.log("ERROR WHILE DELETING")
+        })
 })
 
 
 
 // AddComment
-router.post('/addcomment' , async (req , res)=>{
+router.post('/addcomment', async (req, res) => {
 
     let id = req.body.id
     let comment = req.body.newComment
 
-    console.log("ID ======= " , id)
-    console.log("Comment ======= " , comment)
+    console.log("ID ======= ", id)
+    console.log("Comment ======= ", comment)
 
-    Post.updateOne({_id: id} , {$push : {comments : comment } })
-    .then((data) => {
-        console.log("Comment ADDED SUCCESS = " , data)
-        res.json({err:false , data})
-    }).catch((err)=>{
-        console.log("ERROR WHILE ADDING COMMENT " , err)
-    })
+    Post.updateOne({ _id: id }, { $push: { comments: comment } })
+        .then((data) => {
+            console.log("Comment ADDED SUCCESS = ", data)
+            res.json({ err: false, data })
+        }).catch((err) => {
+            console.log("ERROR WHILE ADDING COMMENT ", err)
+        })
 
 })
 
