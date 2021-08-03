@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 
 import { withStyles, Divider, Button, TextField } from '@material-ui/core'
 import MuiAccordion from '@material-ui/core/Accordion';
@@ -285,8 +286,20 @@ const PostSection = (props) => {
 
     const [expanded, setExpanded] = React.useState('');
 
-    const [posts, setPosts] = useState(postData)
+    const [posts, setPosts] = useState(null)
     const [commentData, setCommentData] = useState("")
+
+    useEffect(async () => {
+        let url = "http://localhost:5000/post/allposts"
+
+        axios.get(url)
+            .then((res) => {
+                console.log("All Posts =========== ", res)
+                setPosts(res.data)
+            }).catch((err) => {
+                console.log("Error While Getting All Posts =========== ", err)
+            })
+    }, [])
 
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded(newExpanded ? panel : false);
@@ -323,60 +336,68 @@ const PostSection = (props) => {
     return (
         <>
             {
-                // props.data.map((props, index) => {
-                posts.map((props, index) => {
-                    return (
-                        <>
-                            <div className="postsection_container" key={props.id}>
-                                <Accordion square expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
-                                    <div className="postsection_box">
-                                        <div className="avater">
-                                            <img src={props.img} alt="ERROR" />
-                                        </div>
-                                        <div className="data">
-                                            <div className="title">
-                                                {props.title}
+                posts == null ?
+                    <>
+                        <h2> No Post </h2>
+                    </> :
+                    // props.data.map((props, index) => {
+                    posts.slice(0).reverse().map((props, index) => {
+                        return (
+                            <>
+                                <div className="postsection_container" key={props.id}>
+                                    <Accordion square expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
+                                        <div className="postsection_box">
+                                            <div className="avater">
+                                                <img src={props.img} alt="ERROR" />
                                             </div>
-                                            <div className="submit_info">
-                                                submitted {props.date} ago by <span> {props.author} </span> from <span> {props.category} </span>
-                                            </div>
-                                            <div className="comment_info">
-                                                <AccordionSummary aria-controls={`panel${index}d-content`} id={`panel${index}d-header`}>
-                                                    {props.comments.length} comments save
-                                                </AccordionSummary>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <AccordionDetails>
-                                        <div className="comments">
-                                            {
-                                                props.comments.map((data, index) => {
-                                                    return (
-                                                        <>
-                                                            <div key={index} style={{ margin: "1rem 0 " }}>
-                                                                <h4 className="author">{data.author}</h4>
-                                                                <div className="comment">
-                                                                    {data.msg}                                                            </div>
-                                                                <Divider />
-                                                            </div>
-                                                        </>
-                                                    )
-                                                })
-                                            }
-                                            <div className="leave_comment">
-                                                <h4>----- LEAVE A COMMENT -----</h4>
-                                                <div className="submit_comment">
-                                                    <MytextField value={commentData} onChange={enteringComment} variant="outlined" label="comment" />
-                                                    <MyBtn onClick={() => saveComment(props.id)} style={{ width: "20%" }} endIcon={<SendIcon />}></MyBtn>
+                                            <div className="data">
+                                                <div className="title">
+                                                    {props.title}
+                                                </div>
+                                                <div className="submit_info">
+                                                    submitted at {props.updatedAt} by <span> {props.author} </span> from <span> {props.category} </span>
+                                                </div>
+                                                <div className="comment_info">
+                                                    <AccordionSummary aria-controls={`panel${index}d-content`} id={`panel${index}d-header`}>
+                                                        {props.comments.length} comments save
+                                                    </AccordionSummary>
                                                 </div>
                                             </div>
                                         </div>
-                                    </AccordionDetails>
-                                </Accordion>
-                            </div>
-                        </>
-                    )
-                })
+                                        <AccordionDetails>
+                                            <div className="comments">
+                                                {
+                                                    props.comments.length < 1 ?
+                                                        <>
+                                                            <h4> No Comments Yet </h4>
+                                                        </> :
+                                                        props.comments.map((data, index) => {
+                                                            return (
+                                                                <>
+                                                                    <div key={index} style={{ margin: "1rem 0 " }}>
+                                                                        <h4 className="author">{data.author}</h4>
+                                                                        <div className="comment">
+                                                                            {data.msg}                                                            </div>
+                                                                        <Divider />
+                                                                    </div>
+                                                                </>
+                                                            )
+                                                        })
+                                                }
+                                                <div className="leave_comment">
+                                                    <h4>----- LEAVE A COMMENT -----</h4>
+                                                    <div className="submit_comment">
+                                                        <MytextField value={commentData} onChange={enteringComment} variant="outlined" label="comment" />
+                                                        <MyBtn onClick={() => saveComment(props.id)} style={{ width: "20%" }} endIcon={<SendIcon />}></MyBtn>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                </div>
+                            </>
+                        )
+                    })
             }
         </>
     )

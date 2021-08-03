@@ -12,6 +12,21 @@ const Post = require("../models/Post");
 
 
 
+// AllPosts
+router.get('/allposts' , async (req , res)=>{
+
+    await Post.find()
+    .then((data)=>{
+        // console.log("All posts ==== " , data)
+        res.json(data)
+    }).catch((err)=>{
+        console.log("Error While getting All posts ====== " , err)
+        res.json(err)
+    })
+})
+
+
+
 // CREATE
 const upload = multer();
 router.post('/createpost', upload.single("file"), async (req, res) => {
