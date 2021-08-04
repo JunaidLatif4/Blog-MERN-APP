@@ -20,6 +20,10 @@ const PostSchema = new mongoose.Schema({
         type: String,
         default: "default"
     },
+    popular:{
+        type:Number,
+        default:1
+    },
     comments :[
         {
             msg:{

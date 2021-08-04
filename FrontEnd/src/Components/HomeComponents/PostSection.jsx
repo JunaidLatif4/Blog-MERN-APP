@@ -10,6 +10,9 @@ import SendIcon from '@material-ui/icons/Send';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Dialog from '@material-ui/core/Dialog';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+
 
 import Post from './Post';
 
@@ -128,8 +131,8 @@ const PostSection = (props) => {
 
         axios.get(url)
             .then((res) => {
-                console.log("All Posts =========== ", res)
                 setPosts(res.data)
+                console.log("All Posts in USESTATE =========== ", posts)
             }).catch((err) => {
                 console.log("Error While Getting All Posts =========== ", err)
             })
@@ -172,8 +175,6 @@ const PostSection = (props) => {
         await axios.delete(url)
             .then((res) => {
                 console.log("DELETED ==== ", res)
-
-                // history.go(0)
             }).catch((err) => {
                 console.log("ERROR WHILE DELETING ==== ", err)
             })
@@ -184,40 +185,94 @@ const PostSection = (props) => {
         })
     }
 
+    const incriment = async (id) => {
+
+        let url = "http://localhost:5000/post/popularadd/" + id
+
+        let prePopular = await posts.filter((find) => find._id == id)
+        let newPopular = prePopular[0].popular + 1
+
+        await axios.patch(url, { newPopular: newPopular })
+            .then((res) => {
+                console.log("Popularity ADDED ==== ", res)
+            }).catch((err) => {
+                console.log("ERROR WHILE ADD POPULARITY ==== ", err)
+            })
+        setreload((preValue) => {
+            return (
+                !preValue
+            )
+        })
+
+        // setPosts((preValue) => {
+        //     return (
+        //         preValue.map((index) => index._id == data ? { ...index, popular: index.popular + 1 } : index)
+        //     )
+        // })
+    }
+    const decriment = async (id) => {
+        let url = "http://localhost:5000/post/popularmin/" + id
+
+        let prePopular = await posts.filter((find) => find._id == id)
+        let newPopular = prePopular[0].popular <= 1 ? prePopular[0].popular : prePopular[0].popular -1 
+
+        await axios.patch(url, { newPopular: newPopular })
+            .then((res) => {
+                console.log("Popularity ADDED ==== ", res)
+            }).catch((err) => {
+                console.log("ERROR WHILE ADD POPULARITY ==== ", err)
+            })
+        setreload((preValue) => {
+            return (
+                !preValue
+            )
+        })
+        // setPosts((preValue) => {
+        //     return (
+        //         preValue.map((index) => index._id == data ? { ...index, popular: index.popular <= 1 ? index.popular : index.popular - 1 } : index)
+        //     )
+        // })
+    }
+
 
     return (
         <>
             {
                 posts == null || posts.length < 1 ?
-                <>
+                    <>
                         <h1 style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50vh" }}> No Post </h1>
                     </> :
-                    posts.slice(0).reverse().map((props, index) => {
-                        console.log("The props that is send === " , props)
+                    posts.slice(0).reverse().map((data, index) => {
+                        console.log("The data that is send === ", data)
                         return (
                             <>
-                                <div className="postsection_container" key={props._id}>
+                                <div className="postsection_container" key={data._id}>
                                     <Accordion square expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
                                         <div className="postsection_box">
                                             <div className="edit">
                                                 <MyDelIconBtn onClick={handleClickOpen}> <EditIcon /> </MyDelIconBtn>
                                             </div>
                                             <div className="delete">
-                                                <MyDelIconBtn onClick={() => deletePost(props._id)}> <DeleteIcon /> </MyDelIconBtn>
+                                                <MyDelIconBtn onClick={() => deletePost(data._id)}> <DeleteIcon /> </MyDelIconBtn>
+                                            </div>
+                                            <div className="popularity" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+                                                <ArrowDropUpIcon style={{ fontSize: "2.5rem", cursor: "pointer" }} onClick={() => incriment(data._id)} />
+                                                <p> {data.popular} </p>
+                                                <ArrowDropDownIcon style={{ fontSize: "2.5rem", cursor: "pointer" }} onClick={() => decriment(data._id)} />
                                             </div>
                                             <div className="avater">
-                                                <img src={props.img} alt="ERROR" />
+                                                <img src={data.img} alt="ERROR" />
                                             </div>
                                             <div className="data">
                                                 <div className="title">
-                                                    {props.title}
+                                                    {data.title}
                                                 </div>
                                                 <div className="submit_info">
-                                                    submitted at {props.updatedAt} by <span> {props.author} </span> from <span> {props.category} </span>
+                                                    submitted at {data.createdAt} by <span> {data.author} </span> from <span> {data.category} </span>
                                                 </div>
                                                 <div className="comment_info">
                                                     <AccordionSummary aria-controls={`panel${index}d-content`} id={`panel${index}d-header`}>
-                                                        {props.comments.length} comments save
+                                                        {data.comments.length} comments save
                                                     </AccordionSummary>
                                                 </div>
                                             </div>
@@ -225,11 +280,11 @@ const PostSection = (props) => {
                                         <AccordionDetails>
                                             <div className="comments">
                                                 {
-                                                    props.comments.length < 1 ?
+                                                    data.comments.length < 1 ?
                                                         <>
                                                             <h4> No Comments Yet </h4>
                                                         </> :
-                                                        props.comments.map((data, index) => {
+                                                        data.comments.map((data, index) => {
                                                             return (
                                                                 <>
                                                                     <div key={index} style={{ margin: "1rem 0 " }}>
@@ -246,7 +301,7 @@ const PostSection = (props) => {
                                                     <h4>----- LEAVE A COMMENT -----</h4>
                                                     <div className="submit_comment">
                                                         <MytextField value={commentData} onChange={enteringComment} variant="outlined" label="comment" />
-                                                        <MyBtn onClick={() => saveComment(props._id)} style={{ width: "20%" }} endIcon={<SendIcon />}></MyBtn>
+                                                        <MyBtn onClick={() => saveComment(data._id)} style={{ width: "20%" }} endIcon={<SendIcon />}></MyBtn>
                                                     </div>
                                                 </div>
                                             </div>
@@ -254,7 +309,7 @@ const PostSection = (props) => {
                                     </Accordion>
                                 </div>
                                 <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-                                    <Post data={props} />
+                                    <Post data={data} />
                                 </Dialog>
                             </>
                         )

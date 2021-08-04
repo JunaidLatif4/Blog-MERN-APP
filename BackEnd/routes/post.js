@@ -52,16 +52,16 @@ router.post('/createpost', upload.single("file"), async (req, res) => {
 
 
 // EDIT POST
-router.patch('/editpost/:id' , async (req , res)=>{
+router.patch('/editpost/:id', async (req, res) => {
     let id = req.params.id;
     let title = req.body.title
-    Post.findOneAndUpdate({_id: id} , { title: title } , {new : true})
-    .then((data)=>{
-        console.log("The Update Data === " , data)
-        res.json(data)
-    }).catch((err)=>{
-        console.log("ERROR WHILE UPDATE == " , err)
-    })
+    Post.findOneAndUpdate({ _id: id }, { title: title }, { new: true })
+        .then((data) => {
+            console.log("The Update Data === ", data)
+            res.json(data)
+        }).catch((err) => {
+            console.log("ERROR WHILE UPDATE == ", err)
+        })
 })
 
 // DELETE
@@ -94,6 +94,34 @@ router.post('/addcomment', async (req, res) => {
             console.log("ERROR WHILE ADDING COMMENT ", err)
         })
 
+})
+
+
+
+// POPULARITY Incriment
+router.patch('/popularadd/:id', async (req, res) => {
+    let id = req.params.id;
+    let newPopular = req.body.newPopular
+    await Post.findOneAndUpdate({ _id: id }, { popular: newPopular })
+    .then((data)=>{
+        res.json(data)
+    }).catch((err)=>{
+        res.json(err)
+    })
+})
+
+
+
+// POPULARITY Decriment
+router.patch('/popularmin/:id', async (req, res) => {
+    let id = req.params.id;
+    let newPopular = req.body.newPopular
+    await Post.findOneAndUpdate({ _id: id }, { popular: newPopular })
+    .then((data)=>{
+        res.json(data)
+    }).catch((err)=>{
+        res.json(err)
+    })
 })
 
 module.exports = router;
