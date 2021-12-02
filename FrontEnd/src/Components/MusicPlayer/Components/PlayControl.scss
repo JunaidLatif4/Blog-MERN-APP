@@ -1,0 +1,27 @@
+.playcontrol_container{
+    position: fixed;
+    color: white;
+    left: 20px;
+    bottom: 20px;
+    .box{
+        display: flex;
+        gap: 1rem;
+        border: 3px solid #262626;
+        background-color: #1a1a1acc;
+        border-radius: .35rem;
+        .controls{
+            display: flex;
+            gap: .5rem;
+            padding: .5rem;
+        }
+        .line{
+            background-color: #262626;
+            width: 2px;
+
+        }
+        .title{
+            width: 200px;
+            padding: .5rem;
+        }
+    }
+}

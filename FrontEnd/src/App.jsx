@@ -9,6 +9,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addUser } from './GlobalStates/actions'
 
 import './CSS/App.scss'
+import MusicPlayer from './Components/MusicPlayer/MusicPlayer';
+import PlayControl from './Components/MusicPlayer/Components/PlayControl';
 
 const App = () => {
 
@@ -16,7 +18,7 @@ const App = () => {
 
   useEffect(async () => {
     let url = "http://localhost:5000/api/getuser"
-    await axios.post(url , {
+    await axios.post(url, {
 
     }, { withCredentials: true })
       .then((res) => {
@@ -29,10 +31,23 @@ const App = () => {
 
   }, [])
 
+  const HomeComponent = () => {
+    return (
+      <>
+        <Header />
+        <Home />
+      </>
+    )
+  }
+
   return (
     <>
-      <Header />
-      <Home />
+    <PlayControl/>
+      <Switch>
+        <Route exact path="/" component={HomeComponent} />
+        <Route path="/music" component={MusicPlayer} />
+      </Switch>
+
     </>
   )
 }
