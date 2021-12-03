@@ -6,13 +6,13 @@ import App from './App';
 
 // GlobalStates
 import { Provider } from 'react-redux'
-import userData from './GlobalStateStore';
-userData.subscribe(() => console.log("The Subscribe = ", userData.getState()))
+import globalData from './GlobalStateStore';
+globalData.subscribe(() => console.log("The Subscribe = ", globalData.getState()))
 
 
 ReactDOM.render(
   <BrowserRouter>
-    <Provider store={userData}>
+    <Provider store={globalData}>
       <App />
     </Provider>
   </BrowserRouter>,

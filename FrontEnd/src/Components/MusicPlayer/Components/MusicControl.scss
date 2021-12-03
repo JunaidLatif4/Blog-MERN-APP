@@ -17,18 +17,25 @@
     }
     .length {
       display: flex;
-      gap: 0.5rem;
+      gap: 1rem;
+      align-items: center;
       padding: 0.7rem;
+      justify-content: center;
+
+      .MuiSlider-sizeSmall {
+        padding: 0;
+      }
 
       .lengthline {
         display: none;
+        width: 200px;
       }
       &:hover {
         .divider {
           display: none;
         }
         .lengthline {
-          display: block;
+          display: flex;
         }
       }
     }
@@ -44,5 +51,14 @@
         position: absolute;
       }
     }
+  }
+}
+
+@keyframes rotateImg {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(1 turn);
   }
 }
