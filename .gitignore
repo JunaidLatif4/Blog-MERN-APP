@@ -5,6 +5,7 @@
 /BackEnd/node_modules
 /BackEnd/.gitignore
 /FrontEnd/.pnp
+/FrontEnd/.netlify
 .pnp.js
 
 # testing

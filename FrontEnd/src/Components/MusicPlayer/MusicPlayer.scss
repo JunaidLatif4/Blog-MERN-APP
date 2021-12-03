@@ -1,13 +1,22 @@
 .musicplayer_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 100vh;
   background-color: #111111;
   color: #f2f2f2;
   overflow: hidden;
-
+  z-index: 20;
   .nav {
     display: flex;
     padding: 2rem 3rem;
     justify-content: space-between;
+
+    .close{
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
   }
 
   .box {
@@ -16,6 +25,7 @@
     justify-content: center;
     align-items: center;
     gap: 5rem;
+    margin-top: -5rem;
 
     .player {
       .img_box {
@@ -72,6 +82,13 @@
           border-radius: inherit;
           width: 350px;
           object-fit: cover;
+
+          @media only screen and (max-width:1400px) {
+            width: 300px;
+          }
+          @media only screen and (max-width:900px) {
+            width: 250px;
+          }
         }
       }
     }
@@ -90,6 +107,19 @@
       }
       .time{
         color: gray;
+      }
+    }
+
+    @media only screen and (max-width:900px) {
+      gap: 2rem;
+
+      .data{
+        .heading{
+          font-size: 2rem;
+        }
+        .detail{
+          font-size: 1.5rem;
+        }
       }
     }
   }

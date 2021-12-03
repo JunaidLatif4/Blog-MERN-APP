@@ -1,8 +1,12 @@
 var initialState = {
     play: false,
-    song: "https://res.cloudinary.com/junaidcloud/video/upload/v1638515973/sk8er_ynmlha.mp3",
+    song: "",
     duration: "0",
-    currentTime: "0"
+    currentTime: "0",
+    title: "",
+    detail: "",
+    img: "",
+    show: false
 };
 
 const musicControlData = (state = initialState, action) => {
@@ -16,11 +20,16 @@ const musicControlData = (state = initialState, action) => {
                 }
             )
         case "PLAY":
-            let song = action.data
+            let songData = action.data
             return (
                 state = {
                     ...state,
-                    song: song,
+                    song: songData.song,
+                    title: songData.title,
+                    detail: songData.detail,
+                    img: songData.img,
+                    play: true,
+                    show: true
                 }
             )
         case "SET":

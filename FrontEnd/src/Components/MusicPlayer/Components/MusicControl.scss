@@ -2,7 +2,7 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-
+  z-index: 30;
   color: white;
 
   .box {
@@ -51,14 +51,25 @@
         position: absolute;
       }
     }
-  }
-}
 
-@keyframes rotateImg {
-  0% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(1 turn);
+    @media only screen and (max-width: 900px) {
+      gap: 0.7rem;
+      border: 2px solid #262626;
+      border-radius: 0.3rem;
+
+      .length {
+        padding: 0.35rem;
+        font-size: 0.8rem;
+        .lengthline {
+          width: 150px;
+        }
+      }
+      .volume_box {
+        padding: 0.35rem;
+        img {
+          width: 17px;
+        }
+      }
+    }
   }
 }

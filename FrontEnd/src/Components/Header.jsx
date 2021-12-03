@@ -297,6 +297,9 @@ const Header = () => {
                             user == null ?
                                 <>
                                     <NavLink to="/register"> <MyBtn onClick={handleClickOpen} variant="contained"> Sign in </MyBtn> </NavLink>
+                                    <NavLink to="/songs"> <MyBtn variant="contained"> Songs </MyBtn> </NavLink>
+                                    <NavLink to="/page2"> <MyBtn variant="contained"> Page 2 </MyBtn> </NavLink>
+                                    <NavLink to="/page3"> <MyBtn variant="contained"> Page 3 </MyBtn> </NavLink>
                                 </> :
                                 <>
                                     <div className={classes.root}>
@@ -306,7 +309,7 @@ const Header = () => {
                                                 aria-controls={menuOpen ? 'menu-list-grow' : undefined}
                                                 aria-haspopup="true"
                                                 onClick={ToggleMenu}
-                                                style={{color:"white" , backgroundColor:"#27a945" , padding:".5rem 1rem"}}
+                                                style={{ color: "white", backgroundColor: "#27a945", padding: ".5rem 1rem" }}
                                             >
                                                 {user.first_name}
                                             </Button>

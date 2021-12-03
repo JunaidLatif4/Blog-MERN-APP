@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react'
 
 import Slider from '@mui/material/Slider';
+import { RiCloseLine } from "react-icons/ri"
 
 import Sk8 from "../../IMG/sk8.jpg"
 import Play from "../../IMG/playblack.svg"
@@ -12,11 +13,11 @@ import { useSelector, useDispatch } from "react-redux"
 
 import "./MusicPlayer.scss"
 
-const MusicPlayer = () => {
+const MusicPlayer = (props) => {
     let dispatch = useDispatch()
     let musicPlayerData = useSelector((state) => state.musicPlayerData)
 
-    // const [duration, setDuration] = useState(0)
+    const [findDuration, setFindDuration] = useState(false)
 
     let audioEl = useRef()
     let animationRef = useRef()
@@ -61,15 +62,19 @@ const MusicPlayer = () => {
         // animationRef.current = requestAnimationFrame(whilePlaying);
     }
 
+    const closePlayer = () => {
+        props.setShowPlayer(false)
+    }
+
     return (
         <>
             <audio ref={audioEl} src={musicPlayerData.song} ></audio>
-            <div className="musicplayer_container">
-                <div className="nav"> <div className="logo"> PressRecord  </div> <div className="close"> X </div> </div>
+            <div className="musicplayer_container" style={{ display: props.showPlayer ? null : "none" }}>
+                <div className="nav"> <div className="logo"> PressRecord  </div> <div className="close" onClick={closePlayer}> <RiCloseLine /> </div> </div>
                 <div className="box">
                     <div className="player">
                         <div className="img_box">
-                            <img src={Sk8} alt="ERROR" className="music_img" style={{ animation: musicPlayerData.play == true ? "rotateImg 50s linear" : null }} />
+                            <img src={musicPlayerData.img} alt="ERROR" className={`music_img ${musicPlayerData.play == true ? "start_rotate" : null}`} />
                             <div className="lines">
                                 <p className="l1"><p className="l2"></p></p>
                             </div>
@@ -89,13 +94,13 @@ const MusicPlayer = () => {
                     </div>
                     <div className="data">
                         <div className="heading">
-                            LRA
+                            {musicPlayerData.title}
                         </div>
                         <div className="detail">
-                            This is the Song Deails
+                            {musicPlayerData.detail}
                         </div>
                         <div className="time">
-                            0:00/8:41
+                            0:00 / {calculateTime(musicPlayerData.duration)}
                         </div>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ const MusicControl = () => {
 
     return (
         <>
-            <div className="musiccontrol_container">
+            <div className="musiccontrol_container" style={{display: musicPlayerData.duration ? null : "none"}}>
                 <div className="box">
                     <div className="length">
                         <p className="starttime">

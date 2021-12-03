@@ -1,0 +1,38 @@
+.songs_container {
+  background-color: wheat;
+  min-height: 100vh;
+  .box {
+    width: 80%;
+    padding: 2rem 0;
+    margin: 0 auto;
+    .heading {
+      font-size: 3rem;
+      margin: 2rem 0;
+    }
+    .data {
+      .song {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid gray;
+        cursor: pointer;
+        .img_box {
+          margin: 0 1rem;
+        }
+        img {
+          width: 80px;
+        }
+        .number {
+          font-size: 2rem;
+        }
+        .title {
+          font-size: 1.5rem;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.37);
+        }
+      }
+    }
+  }
+}
