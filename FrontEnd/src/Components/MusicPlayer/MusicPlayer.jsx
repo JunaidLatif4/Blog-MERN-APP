@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Sk8 from "../../IMG/sk8.jpg"
+import Play from "../../IMG/playblack.svg"
 
 import "./MusicPlayer.scss"
 
@@ -12,12 +13,12 @@ const MusicPlayer = () => {
                 <div className="box">
                     <div className="player">
                         <div className="img_box">
-                            <img src={Sk8} alt="ERROR" />
+                            <img src={Sk8} alt="ERROR" className="music_img" />
                             <div className="lines">
                                 <p className="l1"><p className="l2"></p></p>
                             </div>
                             <div className="play_btn">
-
+                                <span> <img src={Play} alt="ERROR" /> </span>
                             </div>
                         </div>
                     </div>

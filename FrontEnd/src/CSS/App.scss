@@ -1,7 +1,11 @@
+@font-face {
+    font-family: "jun";
+    src: url(../IMG/OnlineWebFonts_COM_a850313836c976d3bc9851d3da4b33e0/Roobert-Regular/Roobert-Regular.ttf);
+}
 *{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-    font-family: 'Roboto', sans-serif;
+    font-family: 'jun', sans-serif;
 }

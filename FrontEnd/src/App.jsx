@@ -11,6 +11,7 @@ import { addUser } from './GlobalStates/actions'
 import './CSS/App.scss'
 import MusicPlayer from './Components/MusicPlayer/MusicPlayer';
 import PlayControl from './Components/MusicPlayer/Components/PlayControl';
+import MusicControl from './Components/MusicPlayer/Components/MusicControl';
 
 const App = () => {
 
@@ -43,6 +44,7 @@ const App = () => {
   return (
     <>
     <PlayControl/>
+    <MusicControl/>
       <Switch>
         <Route exact path="/" component={HomeComponent} />
         <Route path="/music" component={MusicPlayer} />

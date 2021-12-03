@@ -1,0 +1,48 @@
+.musiccontrol_container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  color: white;
+
+  .box {
+    display: flex;
+    gap: 1rem;
+    border: 3px solid #262626;
+    background-color: #1a1a1acc;
+    border-radius: 0.4rem;
+    .line {
+      background-color: #262626;
+      width: 2px;
+    }
+    .length {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.7rem;
+
+      .lengthline {
+        display: none;
+      }
+      &:hover {
+        .divider {
+          display: none;
+        }
+        .lengthline {
+          display: block;
+        }
+      }
+    }
+    .volume_box {
+      position: relative;
+      display: flex;
+      padding: 0.7rem;
+      cursor: pointer;
+      img {
+        width: 20px;
+      }
+      .volume {
+        position: absolute;
+      }
+    }
+  }
+}
