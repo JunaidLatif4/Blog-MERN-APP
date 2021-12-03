@@ -13,7 +13,7 @@
     padding: 2rem 3rem;
     justify-content: space-between;
 
-    .close{
+    .close {
       font-size: 1.5rem;
       cursor: pointer;
     }
@@ -63,7 +63,7 @@
             height: 60%;
           }
         }
-        .play_btn{
+        .play_btn {
           position: absolute;
           top: 0;
           bottom: 0;
@@ -74,7 +74,7 @@
           align-items: center;
           z-index: 10;
 
-          span{
+          span {
             cursor: pointer;
           }
         }
@@ -83,42 +83,278 @@
           width: 350px;
           object-fit: cover;
 
-          @media only screen and (max-width:1400px) {
+          @media only screen and (max-width: 1400px) {
             width: 300px;
           }
-          @media only screen and (max-width:900px) {
+          @media only screen and (max-width: 900px) {
             width: 250px;
           }
         }
       }
     }
 
-    .data{
+    .data {
       display: flex;
       flex-direction: column;
       gap: 1rem;
 
-      .heading{
+      .heading {
         font-size: 3rem;
       }
-      .detail{
+      .detail {
         font-size: 2rem;
         color: #ffc061;
       }
-      .time{
+      .time {
         color: gray;
       }
     }
 
-    @media only screen and (max-width:900px) {
+    @media only screen and (max-width: 900px) {
       gap: 2rem;
 
-      .data{
-        .heading{
+      .data {
+        .heading {
           font-size: 2rem;
         }
-        .detail{
+        .detail {
           font-size: 1.5rem;
+        }
+      }
+    }
+    @media only screen and (max-width: 900px) {
+      margin-top: -15rem;
+      flex-direction: column;
+      .data {
+        justify-content: center;
+        align-items: center;
+        .heading {
+          text-align: center;
+          font-size: 2rem;
+        }
+        .detail {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}
+
+.playcontrol_container {
+  position: fixed;
+  color: white;
+  left: 20px;
+  bottom: 20px;
+  z-index: 30;
+  .box {
+    display: flex;
+    gap: 1rem;
+    border: 3px solid #262626;
+    background-color: #1a1a1acc;
+    border-radius: 0.4rem;
+    .controls {
+      display: flex;
+      gap: 0.7rem;
+      padding: 0.7rem;
+
+      p {
+        cursor: pointer;
+        display: flex;
+        transition: all 0.5s ease-in-out;
+      }
+      .p3 {
+        transform: translateX(0px);
+        &:hover {
+          transform: translateX(3px);
+        }
+      }
+      .p1 {
+        transform: translateX(0px);
+        &:hover {
+          transform: translateX(-3px);
+        }
+      }
+      .p2 {
+        transform: scale(1);
+        &:hover {
+          transform: scale(1.3);
+        }
+      }
+      img {
+        width: 15px;
+      }
+    }
+    .line {
+      background-color: #262626;
+      width: 2px;
+    }
+    .title {
+      cursor: pointer;
+      width: 200px;
+      padding: 0.7rem;
+    }
+
+    @media only screen and (max-width: 900px) {
+      border: 2px solid #262626;
+      border-radius: 0.3rem;
+      gap: 0.7rem;
+
+      .controls {
+        gap: 0.4rem;
+        padding: 0.4rem;
+
+        p {
+          img {
+            width: 12px;
+          }
+        }
+        .p3 {
+          transform: translateX(0px);
+          &:hover {
+            transform: translateX(2px);
+          }
+        }
+        .p1 {
+          transform: translateX(0px);
+          &:hover {
+            transform: translateX(-2px);
+          }
+        }
+        .p2 {
+          transform: scale(1);
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+      }
+      .title {
+        font-size: 0.8rem;
+        padding: 0.4rem;
+        width: 150px;
+      }
+    }
+  }
+  @media only screen and(max-width:500px) {
+    right: 20px;
+    bottom: 60px;
+    .title {
+      width: -webkit-fill-available;
+    }
+  }
+}
+
+.musiccontrol_container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 30;
+  color: white;
+
+  .box {
+    display: flex;
+    gap: 1rem;
+    border: 3px solid #262626;
+    background-color: #1a1a1acc;
+    border-radius: 0.4rem;
+    .line {
+      background-color: #262626;
+      width: 2px;
+    }
+    .length {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      padding: 0.7rem;
+      justify-content: center;
+
+      .MuiSlider-sizeSmall {
+        padding: 0;
+      }
+
+      .lengthline {
+        display: none;
+        width: 200px;
+      }
+      &:hover {
+        .divider {
+          display: none;
+        }
+        .lengthline {
+          display: flex;
+        }
+      }
+    }
+    .volume_box {
+      position: relative;
+      display: flex;
+      padding: 0.7rem;
+      cursor: pointer;
+
+      img {
+        width: 20px;
+      }
+      .volume {
+        display: none;
+        position: absolute;
+        // transform: rotate(270deg);
+        top: -52px;
+        right: 1px;
+        padding: 0.5rem 1rem;
+        width: 0px;
+        border-radius: 0.45rem;
+        border: 3px solid #262626;
+        background-color: #1a1a1acc;
+
+        animation: all 0.5s ease-in-out;
+      }
+
+      &:hover {
+        .volume {
+          display: flex;
+          width: 100px;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 900px) {
+      gap: 0.7rem;
+      border: 2px solid #262626;
+      border-radius: 0.3rem;
+
+      .length {
+        padding: 0.35rem;
+        font-size: 0.8rem;
+        .lengthline {
+          width: 150px;
+        }
+      }
+      .volume_box {
+        padding: 0.35rem;
+        img {
+          width: 17px;
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    left: 20px;
+    .box {
+      .length {
+        width: -webkit-fill-available;
+        padding: 0.35rem;
+        font-size: 0.8rem;
+        .lengthline {
+          display: flex;
+          width: -webkit-fill-available;
+        }
+        .divider{
+          display: none;
+        }
+      }
+      .volume_box {
+        padding: 0.35rem;
+        img {
+          width: 17px;
         }
       }
     }

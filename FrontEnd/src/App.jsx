@@ -10,8 +10,6 @@ import { addUser } from './GlobalStates/actions'
 
 import './CSS/App.scss'
 import MusicPlayer from './Components/MusicPlayer/MusicPlayer';
-import PlayControl from './Components/MusicPlayer/Components/PlayControl';
-import MusicControl from './Components/MusicPlayer/Components/MusicControl';
 import Songs from './Components/Songs/Songs';
 import Page2 from './Components/Page2';
 import Page3 from './Components/Page3';
@@ -19,9 +17,6 @@ import Page3 from './Components/Page3';
 const App = () => {
 
   const dispatch = useDispatch();
-  let musicPlayerData = useSelector((state) => state.musicPlayerData)
-
-  const [showPlayer, setShowPlayer] = useState(false)
 
   useEffect(async () => {
     let url = "http://localhost:5000/api/getuser"
@@ -49,9 +44,7 @@ const App = () => {
 
   return (
     <>
-      <PlayControl setShowPlayer={setShowPlayer} />
-      <MusicControl />
-      <MusicPlayer showPlayer={showPlayer} setShowPlayer={setShowPlayer} />
+      <MusicPlayer />
       <Switch>
         <Route exact path="/" component={HomeComponent} />
         <Route path="/music" component={MusicPlayer} />
